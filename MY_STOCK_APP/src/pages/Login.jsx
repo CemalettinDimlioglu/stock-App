@@ -29,12 +29,12 @@ const Login = () => {
 
     password:string()
     .required("Password zorunlu")
-    .min(8, "password en az 8 karakter olmalıdır")
-    .max(20,"en cok 20 karakter olmalıdır")
-    .matches(/\d+/, "Password bir sayı içermelidir")
-    .matches(/[a-z]/, "Password bir kücük harf içermelidir")
-    .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
-    .matches(/[!,?{}<>%&/*-/+]+/, "Password özel bir karakter içermelidir")
+    // .min(8, "password en az 8 karakter olmalıdır")
+    // .max(20,"en cok 20 karakter olmalıdır")
+    // .matches(/\d+/, "Password bir sayı içermelidir")
+    // .matches(/[a-z]/, "Password bir kücük harf içermelidir")
+    // .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
+    // .matches(/[!,?{}<>%&/*-/+]+/, "Password özel bir karakter içermelidir")
   });
 
   return (
