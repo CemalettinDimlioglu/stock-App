@@ -1,40 +1,37 @@
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import LockIcon from "@mui/icons-material/Lock";
-import image from "../assets/result.svg";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { Formik, Form } from "formik";
-import TextField from "@mui/material/TextField";
-import { object, string } from "yup";
-import LoadingButton from "@mui/lab/LoadingButton";
-
-
+import Avatar from "@mui/material/Avatar"
+import Box from "@mui/material/Box"
+import Container from "@mui/material/Container"
+import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
+import LockIcon from "@mui/icons-material/Lock"
+import image from "../assets/result.svg"
+import { Link, useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { Formik, Form } from "formik"
+import TextField from "@mui/material/TextField"
+import { object, string } from "yup"
+import LoadingButton from "@mui/lab/LoadingButton"
+import useAuthCall from "../hooks/useAuthCall"
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { currentUser, error } = useSelector((state) => state?.auth);
+  const navigate = useNavigate()
+  const { currentUser, error, loading } = useSelector((state) => state?.auth)
 
+  const { login } = useAuthCall()
 
-  const loginScheme = object ({
-
-    email:string()
-    .email("lutfen calid bir giriş yapınız")
-    .required("Email zorunlu"),
-
-
-    password:string()
-    .required("Password zorunlu")
-    .min(8, "password en az 8 karakter olmalıdır")
-    .max(20,"en cok 20 karakter olmalıdır")
-    .matches(/\d+/, "Password bir sayı içermelidir")
-    .matches(/[a-z]/, "Password bir kücük harf içermelidir")
-    .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
-    .matches(/[!,?{}<>%&/*-/+]+/, "Password özel bir karakter içermelidir")
-  });
+  const loginScheme = object({
+    email: string()
+      .email("Lutfen valid bir email giriniz")
+      .required("Email zorunludur"),
+    password: string()
+      .required("password zorunludur")
+      .min(8, "password en az 8 karakter olmalıdır")
+      .max(20, "password en fazla 20 karakter olmalıdır")
+      .matches(/\d+/, "Password bir sayı içermelidir")
+      .matches(/[a-z]/, "Password bir küçük harf içermelidir")
+      .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
+      .matches(/[!,?{}><%&$#£+-.]+/, "Password bir özel karakter içermelidir"),
+  })
 
   return (
     <Container maxWidth="lg">
@@ -77,15 +74,14 @@ const Login = () => {
             initialValues={{ email: "", password: "" }}
             validationSchema={loginScheme}
             onSubmit={(values, actions) => {
-              //TODO login(values)  POST istegi
-              //TODO navigate
-              actions.resetForm();
-              actions.setSubmitting(false);
+              login(values)
+              actions.resetForm()
+              actions.setSubmitting(false)
             }}
           >
             {({ values, handleChange, handleBlur, errors, touched }) => (
               <Form>
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                   <TextField
                     label="Email"
                     name="email"
@@ -97,10 +93,9 @@ const Login = () => {
                     onBlur={handleBlur}
                     error={touched.email && Boolean(errors.email)}
                     helperText={touched.email && errors.email}
-                    
                   />
                   <TextField
-                    label="password"
+                    label="Password"
                     name="password"
                     id="password"
                     type="password"
@@ -110,14 +105,14 @@ const Login = () => {
                     onBlur={handleBlur}
                     error={touched.password && Boolean(errors.password)}
                     helperText={touched.password && errors.password}
-                    
                   />
-                  <LoadingButton 
-                  type="submit" 
-                  variant="contained" 
-                  // loading={loading}
-                   >
-                  Submit
+
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={loading}
+                  >
+                    Submit
                   </LoadingButton>
                 </Box>
               </Form>
@@ -136,7 +131,7 @@ const Login = () => {
         </Grid>
       </Grid>
     </Container>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
