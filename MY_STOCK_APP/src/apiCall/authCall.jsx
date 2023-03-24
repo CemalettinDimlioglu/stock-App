@@ -5,6 +5,8 @@ export const login  = async (userInfo)=>{
 
 try{
      const {data} = await axios.post(`${BASE_URL}account/auth/login/`,userInfo)  
+     console.log(data)
+     return data
 } catch (error) {
      console.log(error);
 }
