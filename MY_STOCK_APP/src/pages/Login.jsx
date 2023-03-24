@@ -81,7 +81,7 @@ const Login = () => {
               //TODO login(values)  POST istegi
               login()
               //TODO navigate
-              actions.resetForm();
+              actions.resetForm(values);
               actions.setSubmitting(false);
             }}
           >
